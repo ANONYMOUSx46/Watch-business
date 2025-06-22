@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { insertContactSchema } from "@shared/schema";
-import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,7 +17,6 @@ type ContactFormData = z.infer<typeof insertContactSchema>;
 export function ContactForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
-  const queryClient = useQueryClient();
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(insertContactSchema),
@@ -31,28 +28,12 @@ export function ContactForm() {
     },
   });
 
-  const createContactMutation = useMutation({
-    mutationFn: (data: ContactFormData) => apiRequest("POST", "/api/contacts", data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/contacts"] });
-      setIsSubmitted(true);
-      form.reset();
-      toast({
-        title: "Message Sent",
-        description: "Thank you for contacting us. We'll respond within 24 hours.",
-      });
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to send message. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const onSubmit = (data: ContactFormData) => {
-    createContactMutation.mutate(data);
+  const onSubmit = () => {
+    setIsSubmitted(true);
+    toast({
+      title: "Message Sent",
+      description: "Thank you for contacting us. We'll respond within 24 hours.",
+    });
   };
 
   if (isSubmitted) {
@@ -94,10 +75,19 @@ export function ContactForm() {
           Have questions about our services? Need expert advice? We're here to help with all your watch repair needs.
         </p>
       </CardHeader>
-      
+
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-6"
+          >
+            {/* Hidden input required by Netlify */}
+            <input type="hidden" name="form-name" value="contact" />
+
             <div className="grid md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -112,7 +102,7 @@ export function ContactForm() {
                   </FormItem>
                 )}
               />
-              
+
               <FormField
                 control={form.control}
                 name="email"
@@ -149,23 +139,18 @@ export function ContactForm() {
                 <FormItem>
                   <FormLabel>Message</FormLabel>
                   <FormControl>
-                    <Textarea 
-                      {...field} 
-                      placeholder="Please provide details about your inquiry..."
-                      rows={5}
-                    />
+                    <Textarea {...field} rows={5} placeholder="Please provide details about your inquiry..." />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full bg-gradient-to-r from-bronze to-silver text-white py-3 rounded-full hover:shadow-lg transition-all"
-              disabled={createContactMutation.isPending}
             >
-              {createContactMutation.isPending ? "Sending..." : "Send Message"}
+              Send Message
             </Button>
           </form>
         </Form>
