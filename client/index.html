@@ -8,14 +8,37 @@
     <meta property="og:title" content="TimeKeeper Masters - Premium Watch Repair Services" />
     <meta property="og:description" content="Connect with master watchmakers for professional watch repair, restoration, and servicing. Trusted by collectors worldwide." />
     <meta property="og:type" content="website" />
-	<link rel="icon" href="/watch6.avif" type="image/avif">
-	<link rel="icon" href="/watch6.png" type="image/png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="/watch6.avif" type="image/avif">
+    <link rel="icon" href="/watch6.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">   
+    <link rel="preconnect" href="https://fonts.gstatic.com"  crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Hidden Netlify Forms -->
+    <form name="contact" method="POST" data-netlify="true" style="display:none;" aria-hidden="true">
+      <input type="hidden" name="form-name" value="contact" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="subject" />
+      <textarea name="message"></textarea>
+    </form>
+
+    <form name="quote" method="POST" data-netlify="true" style="display:none;" aria-hidden="true">
+      <input type="hidden" name="form-name" value="quote" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="watchBrand" />
+      <input type="text" name="watchModel" />
+      <input type="text" name="watchType" />
+      <textarea name="issueDescription"></textarea>
+      <input type="text" name="preferredService" />
+      <input type="text" name="urgency" />
+      <input type="text" name="budget" />
+    </form>
   </body>
 </html>
