@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { insertQuoteSchema } from "@shared/schema";
-import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,7 +18,6 @@ type QuoteFormData = z.infer<typeof insertQuoteSchema>;
 export function QuoteForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
-  const queryClient = useQueryClient();
 
   const form = useForm<QuoteFormData>({
     resolver: zodResolver(insertQuoteSchema),
@@ -38,27 +35,12 @@ export function QuoteForm() {
     },
   });
 
-  const createQuoteMutation = useMutation({
-    mutationFn: (data: QuoteFormData) => apiRequest("POST", "/api/quotes", data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/quotes"] });
-      setIsSubmitted(true);
-      toast({
-        title: "Quote Request Submitted",
-        description: "We'll get back to you within 24 hours with a detailed quote.",
-      });
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to submit quote request. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const onSubmit = (data: QuoteFormData) => {
-    createQuoteMutation.mutate(data);
+  const onSubmit = () => {
+    setIsSubmitted(true);
+    toast({
+      title: "Quote Request Submitted",
+      description: "We'll get back to you within 24 hours with a detailed quote.",
+    });
   };
 
   if (isSubmitted) {
@@ -100,10 +82,19 @@ export function QuoteForm() {
           Provide details about your timepiece and we'll connect you with the perfect master watchmaker for your needs.
         </p>
       </CardHeader>
-      
+
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form
+            name="quote"
+            method="POST"
+            data-netlify="true"
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-6"
+          >
+            {/* Hidden field required by Netlify */}
+            <input type="hidden" name="form-name" value="quote" />
+
             <div className="grid md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -118,7 +109,6 @@ export function QuoteForm() {
                   </FormItem>
                 )}
               />
-              
               <FormField
                 control={form.control}
                 name="email"
@@ -148,7 +138,6 @@ export function QuoteForm() {
                   </FormItem>
                 )}
               />
-              
               <FormField
                 control={form.control}
                 name="watchBrand"
@@ -178,7 +167,6 @@ export function QuoteForm() {
                   </FormItem>
                 )}
               />
-              
               <FormField
                 control={form.control}
                 name="watchType"
@@ -209,8 +197,8 @@ export function QuoteForm() {
                 <FormItem>
                   <FormLabel>Issue Description</FormLabel>
                   <FormControl>
-                    <Textarea 
-                      {...field} 
+                    <Textarea
+                      {...field}
                       placeholder="Please describe the issues with your watch, any symptoms you've noticed, and what repairs you think might be needed..."
                       rows={4}
                     />
@@ -234,7 +222,6 @@ export function QuoteForm() {
                   </FormItem>
                 )}
               />
-              
               <FormField
                 control={form.control}
                 name="urgency"
@@ -257,7 +244,6 @@ export function QuoteForm() {
                   </FormItem>
                 )}
               />
-              
               <FormField
                 control={form.control}
                 name="budget"
@@ -273,12 +259,11 @@ export function QuoteForm() {
               />
             </div>
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full bg-gradient-to-r from-bronze to-silver text-white py-3 rounded-full hover:shadow-lg transition-all"
-              disabled={createQuoteMutation.isPending}
             >
-              {createQuoteMutation.isPending ? "Submitting..." : "Request Professional Quote"}
+              Request Professional Quote
             </Button>
           </form>
         </Form>
