@@ -1,0 +1,207 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(215, 80%, 13%);
+  --foreground: hsl(47, 78%, 98%);
+  --muted: hsl(214, 32%, 20%);
+  --muted-foreground: hsl(210, 16%, 75%);
+  --popover: hsl(215, 80%, 13%);
+  --popover-foreground: hsl(47, 78%, 98%);
+  --card: hsl(214, 32%, 20%);
+  --card-foreground: hsl(47, 78%, 98%);
+  --border: hsl(214, 32%, 25%);
+  --input: hsl(214, 32%, 25%);
+  --primary: hsl(39, 58%, 52%);
+  --primary-foreground: hsl(215, 80%, 13%);
+  --secondary: hsl(214, 32%, 20%);
+  --secondary-foreground: hsl(47, 78%, 98%);
+  --accent: hsl(214, 32%, 25%);
+  --accent-foreground: hsl(47, 78%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(39, 58%, 52%);
+  --radius: 0.75rem;
+  
+  /* Custom watch repair theme colors - Dark Theme Only */
+  --navy: hsl(215, 80%, 13%);
+  --espresso: hsl(14, 12%, 24%);
+  --silver: hsl(0, 0%, 85%);
+  --bronze: hsl(39, 58%, 52%);
+  --ivory: hsl(47, 78%, 98%);
+  --sand: hsl(35, 22%, 90%);
+  
+  /* Dark mode text colors */
+  --text-primary: hsl(47, 78%, 98%);
+  --text-secondary: hsl(47, 60%, 90%);
+  --text-muted: hsl(47, 40%, 80%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply antialiased bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .glass-dark {
+    background: rgba(10, 31, 68, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(192, 192, 192, 0.1);
+  }
+
+  .liquid-morph {
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.05)
+    );
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .liquid-morph:hover {
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.15),
+      rgba(255, 255, 255, 0.08)
+    );
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .liquid-morph {
+    background: linear-gradient(135deg, 
+      rgba(10, 31, 68, 0.2),
+      rgba(60, 47, 47, 0.1)
+    );
+    border: 1px solid rgba(192, 192, 192, 0.1);
+  }
+
+  .liquid-morph:hover {
+    background: linear-gradient(135deg, 
+      rgba(10, 31, 68, 0.3),
+      rgba(60, 47, 47, 0.15)
+    );
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--bronze), var(--silver));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav-blur {
+    transition: all 0.3s ease;
+  }
+
+  .nav-blur.scrolled {
+    background: rgba(10, 31, 68, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(192, 192, 192, 0.1);
+  }
+
+  .parallax-bg {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  @media (max-width: 768px) {
+    .parallax-bg {
+      background-attachment: scroll;
+    }
+  }
+}
+
+@layer utilities {
+  .text-navy {
+    color: var(--text-primary);
+  }
+  
+  .text-espresso {
+    color: var(--text-secondary);
+  }
+  
+  .text-silver {
+    color: var(--silver);
+  }
+  
+  .text-bronze {
+    color: var(--bronze);
+  }
+  
+  .text-ivory {
+    color: var(--text-primary);
+  }
+  
+  .text-sand {
+    color: var(--sand);
+  }
+  
+  .text-primary-custom {
+    color: var(--text-primary);
+  }
+  
+  .text-secondary-custom {
+    color: var(--text-secondary);
+  }
+  
+  .text-muted-custom {
+    color: var(--text-muted);
+  }
+
+  .bg-navy {
+    background-color: var(--navy);
+  }
+  
+  .bg-espresso {
+    background-color: var(--espresso);
+  }
+  
+  .bg-silver {
+    background-color: var(--silver);
+  }
+  
+  .bg-bronze {
+    background-color: var(--bronze);
+  }
+  
+  .bg-ivory {
+    background-color: var(--ivory);
+  }
+  
+  .bg-sand {
+    background-color: var(--sand);
+  }
+
+  .border-navy {
+    border-color: var(--navy);
+  }
+  
+  .border-bronze {
+    border-color: var(--bronze);
+  }
+  
+  .border-silver {
+    border-color: var(--silver);
+  }
+}
