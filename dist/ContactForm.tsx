@@ -38,26 +38,13 @@ export function ContactForm() {
 
   if (isSubmitted) {
     return (
-      <motion.div
-        className="text-center py-12"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-      >
+      <motion.div className="text-center py-12" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}>
         <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckCircle className="w-8 h-8 text-white" />
         </div>
-        <h3 className="font-playfair text-2xl font-bold text-navy dark:text-ivory mb-2">
-          Message Sent Successfully!
-        </h3>
-        <p className="text-navy/70 dark:text-ivory/70 mb-6">
-          We've received your message and will get back to you within 24 hours.
-        </p>
-        <Button 
-          onClick={() => setIsSubmitted(false)}
-          variant="outline"
-          className="border-bronze text-bronze hover:bg-bronze hover:text-white"
-        >
+        <h3 className="font-playfair text-2xl font-bold text-navy dark:text-ivory mb-2">Message Sent Successfully!</h3>
+        <p className="text-navy/70 dark:text-ivory/70 mb-6">We've received your message and will get back to you within 24 hours.</p>
+        <Button onClick={() => setIsSubmitted(false)} variant="outline" className="border-bronze text-bronze hover:bg-bronze hover:text-white">
           Send Another Message
         </Button>
       </motion.div>
@@ -81,11 +68,12 @@ export function ContactForm() {
           <form
             name="contact"
             method="POST"
+            action="/"
             data-netlify="true"
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-6"
           >
-            {/* Hidden input required by Netlify */}
+            {/* Netlify required hidden input */}
             <input type="hidden" name="form-name" value="contact" />
 
             <div className="grid md:grid-cols-2 gap-4">
@@ -96,7 +84,7 @@ export function ContactForm() {
                   <FormItem>
                     <FormLabel>Your Name</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="Your full name" />
+                      <Input {...field} name="name" placeholder="Your full name" required />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -110,7 +98,7 @@ export function ContactForm() {
                   <FormItem>
                     <FormLabel>Email Address</FormLabel>
                     <FormControl>
-                      <Input {...field} type="email" placeholder="your.email@example.com" />
+                      <Input {...field} name="email" type="email" placeholder="your.email@example.com" required />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -125,7 +113,7 @@ export function ContactForm() {
                 <FormItem>
                   <FormLabel>Subject</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="What can we help you with?" />
+                    <Input {...field} name="subject" placeholder="What can we help you with?" required />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -139,7 +127,7 @@ export function ContactForm() {
                 <FormItem>
                   <FormLabel>Message</FormLabel>
                   <FormControl>
-                    <Textarea {...field} rows={5} placeholder="Please provide details about your inquiry..." />
+                    <Textarea {...field} name="message" rows={5} placeholder="Please provide details about your inquiry..." required />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
