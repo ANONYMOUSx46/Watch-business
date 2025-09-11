@@ -1,29 +1,46 @@
 import { motion } from "framer-motion";
-import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Clock, User } from "lucide-react";
 import type { GalleryItem } from "@shared/schema";
 
 export function Gallery() {
-  const { data: galleryItems, isLoading } = useQuery<GalleryItem[]>({
-    queryKey: ["/api/gallery", { featured: true }],
-  });
-
-  if (isLoading) {
-    return (
-      <section id="gallery" className="py-20 bg-espresso/20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center">
-            <div className="animate-pulse space-y-4">
-              <div className="h-8 bg-gray-600 rounded w-1/3 mx-auto"></div>
-              <div className="h-4 bg-gray-600 rounded w-1/2 mx-auto"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  // Static gallery data for Netlify hosting
+  const galleryItems: GalleryItem[] = [
+    {
+      id: 1,
+      title: "Vintage Omega Seamaster Restoration",
+      description: "Complete restoration of a 1960s Omega Seamaster including case polishing, movement service, and dial refinishing.",
+      beforeImageUrl: "/watch6.jpg",
+      afterImageUrl: "/watch.jpeg",
+      watchmakerName: "Liam De Wet",
+      serviceType: "Vintage Restoration",
+      completionTime: "6 weeks",
+      featured: true
+    },
+    {
+      id: 2,
+      title: "Rolex Submariner Service",
+      description: "Full service and maintenance of a Rolex Submariner, including crystal replacement and bracelet refurbishment.",
+      beforeImageUrl: "/watch2.jpeg",
+      afterImageUrl: "/watch3.jpeg",
+      watchmakerName: "Liam De Wet",
+      serviceType: "Luxury Service",
+      completionTime: "4 weeks",
+      featured: true
+    },
+    {
+      id: 3,
+      title: "Mechanical Watch Movement Repair",
+      description: "Complex movement repair involving gear replacement and regulation adjustment for optimal accuracy.",
+      beforeImageUrl: "/watch4.jpeg",
+      afterImageUrl: "/watch5.jpeg",
+      watchmakerName: "Liam De Wet",
+      serviceType: "Movement Repair",
+      completionTime: "3 weeks",
+      featured: true
+    }
+  ];
 
   return (
     <section id="gallery" className="py-20 bg-espresso/20">
