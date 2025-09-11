@@ -1,29 +1,49 @@
 import { motion } from "framer-motion";
-import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star } from "lucide-react";
 import type { Service } from "@shared/schema";
 
 export function Services() {
-  const { data: services, isLoading } = useQuery<Service[]>({
-    queryKey: ["/api/services"],
-  });
-
-  if (isLoading) {
-    return (
-      <section id="services" className="py-20 bg-espresso/20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center">
-            <div className="animate-pulse space-y-4">
-              <div className="h-8 bg-gray-600 rounded w-1/3 mx-auto"></div>
-              <div className="h-4 bg-gray-600 rounded w-1/2 mx-auto"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  // Static services data for Netlify hosting
+  const services: Service[] = [
+    {
+      id: 1,
+      name: "Manual Wind Service",
+      description: "Complete disassembly, cleaning, lubrication, and reassembly of manual wind movements. Includes regulation and accuracy testing.",
+      category: "manual",
+      basePrice: "150.00",
+      estimatedDuration: "2-3 weeks",
+      imageUrl: "/watch2.jpeg"
+    },
+    {
+      id: 2,
+      name: "Automatic Watch Service",
+      description: "Full service for automatic movements including rotor cleaning, mainspring replacement, and precision regulation.",
+      category: "automatic",
+      basePrice: "200.00",
+      estimatedDuration: "3-4 weeks",
+      imageUrl: "/watch3.jpeg"
+    },
+    {
+      id: 3,
+      name: "Vintage Watch Restoration",
+      description: "Specialized restoration for vintage timepieces, including case polishing, dial refinishing, and movement conservation.",
+      category: "vintage",
+      basePrice: "300.00",
+      estimatedDuration: "4-6 weeks",
+      imageUrl: "/watch4.jpeg"
+    },
+    {
+      id: 4,
+      name: "Luxury Watch Service",
+      description: "Premium service for high-end timepieces with specialized tools and techniques for luxury brands.",
+      category: "luxury",
+      basePrice: "400.00",
+      estimatedDuration: "3-5 weeks",
+      imageUrl: "/watch5.jpeg"
+    }
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
