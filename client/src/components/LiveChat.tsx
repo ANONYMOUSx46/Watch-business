@@ -11,7 +11,7 @@ export function LiveChat() {
     {
       id: 1,
       sender: "support",
-      message: "Hello! I'm the live chat from TimeKeeper Masters. How can I help you find the perfect watch repair service today?",
+      message: "Hello! I'm the live chat from NAME. How can I help you find the perfect watch repair service today?",
       timestamp: new Date()
     }
   ]);
